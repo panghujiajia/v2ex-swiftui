@@ -6,29 +6,25 @@
 //
 
 import SwiftUI
+import V2exAPI
 
 struct TopicItemView: View {
-    var topic: Topic
+    var topic: V2Topic
     
     var body: some View {
         NavigationLink{
             TopicDetailView(topic: topic)
         } label: {
             VStack(alignment: .leading) {
-                NavigationLink{
-                    Text("用户主页")
-                } label: {
-                    TopicUserView(topic: topic)
-                }
-                Text(topic.title)
+                TopicUserView(avatar: (topic.member?.avatarLarge)!, username: (topic.member?.username)!, lastReply: topic.lastModified!)
+                Text(topic.title ?? "")
                     .font(.headline)
                     .foregroundColor(Color("333333"))
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                     .padding(.top, 6)
-                TopicInfoView(topic: topic)
+                TopicInfoView(name: (topic.node?.title)!, replies: topic.replies!)
             }
-            .navigationTitle("哈哈哈")
             .padding()
         }
     }
@@ -36,6 +32,7 @@ struct TopicItemView: View {
 
 struct TopicItemView_Previews: PreviewProvider {
     static var previews: some View {
-        TopicItemView(topic: Topics[0])
+        let topic = PreviewData.topic
+        TopicItemView(topic: topic)
     }
 }

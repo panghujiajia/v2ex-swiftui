@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selection: Tab = .featured
+    @State private var data: Data?
     
     enum Tab {
             case featured
@@ -21,7 +22,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             TabView(selection: $selection) {
                 HomeView()
                     .tabItem {
@@ -43,6 +44,15 @@ struct ContentView: View {
             }
             .accentColor(Color("4474FF"))
         }
+    }
+    
+    func fetchData() {
+        guard let url = URL(string: "https://www.example.com/data.json") else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let data = data {
+                self.data = data
+            }
+        }.resume()
     }
 }
 

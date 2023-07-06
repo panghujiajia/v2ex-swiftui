@@ -6,16 +6,18 @@
 //
 
 import SwiftUI
+import V2exAPI
 
 struct TopicInfoView: View {
-    var topic: Topic
+    var name: String
+    var replies: Int
     
     var body: some View {
         HStack {
             NavigationLink{
                 Text("节点页面")
             } label: {
-                Text("# \(topic.tag)")
+                Text("# \(name)")
                     .font(.footnote)
                     .padding(.horizontal, 15.0)
                     .padding(.vertical, 6.0)
@@ -25,16 +27,19 @@ struct TopicInfoView: View {
             }
             
             Spacer()
-            
-            Text("\(topic.reply)条回复")
-                .font(.footnote)
-                .foregroundColor(Color("999999"))
+            if replies > 0 {
+                Text("\(replies)条回复")
+                    .font(.footnote)
+                    .foregroundColor(Color("999999"))
+            }
         }
     }
 }
 
 struct TopicInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        TopicInfoView(topic: Topics[0])
+        let name = "ljsh093"
+        let replies = 0
+        TopicInfoView(name: name, replies: replies)
     }
 }

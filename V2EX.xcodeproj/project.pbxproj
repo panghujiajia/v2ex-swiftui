@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D1E494D29E81C4C0030E368 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E494C29E81C4C0030E368 /* MarkdownUI */; };
+		3D1E495029E81C5D0030E368 /* V2exAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E494F29E81C5D0030E368 /* V2exAPI */; };
+		3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E495229E82C3C0030E368 /* Kingfisher */; };
 		3DBD2C2E29E4235800EDC1EE /* V2EXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD2C2D29E4235800EDC1EE /* V2EXApp.swift */; };
 		3DBD2C3029E4235800EDC1EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD2C2F29E4235800EDC1EE /* ContentView.swift */; };
 		3DBD2C3229E4235900EDC1EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DBD2C3129E4235900EDC1EE /* Assets.xcassets */; };
@@ -46,12 +49,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */,
+				3D1E495029E81C5D0030E368 /* V2exAPI in Frameworks */,
+				3D1E494D29E81C4C0030E368 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D1E494829E808630030E368 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		3DBD2C2129E4235800EDC1EE = {
 			isa = PBXGroup;
 			children = (
@@ -71,8 +84,9 @@
 		3DBD2C2C29E4235800EDC1EE /* V2EX */ = {
 			isa = PBXGroup;
 			children = (
+				3D1E494829E808630030E368 /* Service */,
 				3DBD2C4729E425FC00EDC1EE /* Model */,
-				3DBD2C3B29E4236800EDC1EE /* Views */,
+				3DBD2C3B29E4236800EDC1EE /* View */,
 				3DBD2C2D29E4235800EDC1EE /* V2EXApp.swift */,
 				3DBD2C2F29E4235800EDC1EE /* ContentView.swift */,
 				3DBD2C3129E4235900EDC1EE /* Assets.xcassets */,
@@ -89,14 +103,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		3DBD2C3B29E4236800EDC1EE /* Views */ = {
+		3DBD2C3B29E4236800EDC1EE /* View */ = {
 			isa = PBXGroup;
 			children = (
 				3DBD2C3D29E4238900EDC1EE /* Components */,
 				3DBD2C3C29E4238100EDC1EE /* Tabbar */,
 				3DBD2C5029E4303800EDC1EE /* TopicDetailView.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		3DBD2C3C29E4238100EDC1EE /* Tabbar */ = {
@@ -145,6 +159,11 @@
 			dependencies = (
 			);
 			name = V2EX;
+			packageProductDependencies = (
+				3D1E494C29E81C4C0030E368 /* MarkdownUI */,
+				3D1E494F29E81C5D0030E368 /* V2exAPI */,
+				3D1E495229E82C3C0030E368 /* Kingfisher */,
+			);
 			productName = V2EX;
 			productReference = 3DBD2C2A29E4235800EDC1EE /* V2EX.app */;
 			productType = "com.apple.product-type.application";
@@ -173,6 +192,11 @@
 				Base,
 			);
 			mainGroup = 3DBD2C2129E4235800EDC1EE;
+			packageReferences = (
+				3D1E494B29E81C4C0030E368 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
+				3D1E494E29E81C5D0030E368 /* XCRemoteSwiftPackageReference "V2exAPI" */,
+				3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 3DBD2C2B29E4235800EDC1EE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -411,6 +435,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3D1E494B29E81C4C0030E368 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		3D1E494E29E81C5D0030E368 /* XCRemoteSwiftPackageReference "V2exAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/isaced/V2exAPI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3D1E494C29E81C4C0030E368 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D1E494B29E81C4C0030E368 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
+		};
+		3D1E494F29E81C5D0030E368 /* V2exAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D1E494E29E81C5D0030E368 /* XCRemoteSwiftPackageReference "V2exAPI" */;
+			productName = V2exAPI;
+		};
+		3D1E495229E82C3C0030E368 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3DBD2C2229E4235800EDC1EE /* Project object */;
 }

@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import V2exAPI
 
 struct TabViewView: View {
     @State var selectedIndex = 0
     @Namespace var ScrollTabViewAnimation
+    
+    @State var topics: [V2Topic] = []
+    
     var body: some View {
         VStack{
             ScrollViewReader { ScrollViewProxy in
@@ -43,6 +47,9 @@ struct TabViewView: View {
                                         selectedIndex = index
                                         ScrollViewProxy.scrollTo(selectedIndex, anchor: .center)
                                     }
+                                    Task {
+                                        await self.loadData(index: index)
+                                    }
                                 }
                             }
                         }
@@ -61,15 +68,18 @@ struct TabViewView: View {
                                 selectedIndex = newTab
                                 ScrollViewProxy.scrollTo(selectedIndex, anchor: .center)
                             }
+                            Task {
+                                await self.loadData(index: newTab)
+                            }
                         }
                     )){
                         ForEach(0..<Tabs.count, id:\.self) { index in
                             ZStack{
                                 ScrollView(.vertical, showsIndicators: false){
                                     VStack(spacing: 0){
-                                        ForEach(0..<Topics.count, id:\.self) { index in
+                                        ForEach(Tabs[index].topic) { topic in
                                             VStack(spacing: 0){
-                                                TopicItemView(topic: Topics[index])
+                                                TopicItemView(topic: topic)
                                                 Divider()
                                                     .padding(.leading)
                                                     .padding(.vertical, 0)
@@ -90,6 +100,35 @@ struct TabViewView: View {
             }
         }
         .ignoresSafeArea(edges: .bottom)
+        .onAppear {
+            Task {
+                await self.loadData(index: 0)
+            }
+        }
+    }
+    
+    func loadData(index: Int) async {
+        
+        do {
+            var topics: [V2Topic]?
+            
+            if index == 0 {
+                
+                topics = try await v2ex.hotTopics()
+            } else if index == 1 {
+                
+                topics = try await v2ex.latestTopics()
+            } else {
+                topics = try await v2ex.topics(nodeName: "pwa", page: 1)?.result
+            }
+            
+            Tabs[index].topic = topics ?? []
+            
+            self.topics = topics ?? []
+            
+        } catch {
+            print("error")
+        }
     }
 }
 

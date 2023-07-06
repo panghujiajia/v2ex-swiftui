@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import V2exAPI
+
+var v2ex = V2exAPI()
 
 @main
 struct V2EXApp: App {

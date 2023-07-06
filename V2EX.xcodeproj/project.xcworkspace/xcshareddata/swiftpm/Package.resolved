@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "af4be924ad984cf4d16f4ae4df424e79a443d435",
+        "version" : "7.6.2"
+      }
+    },
+    {
+      "identity" : "swift-markdown-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "state" : {
+        "revision" : "4392c3cefd08db10f13ffb019d7c7a4a622824f5",
+        "version" : "2.0.2"
+      }
+    },
+    {
+      "identity" : "v2exapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/isaced/V2exAPI",
+      "state" : {
+        "revision" : "3eb17298b252f1492c3dbf52882550fd16d3d9b9",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 2
+}
