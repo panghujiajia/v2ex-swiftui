@@ -74,6 +74,24 @@ var Tabs = [
     Tab(key: "11", value: "交易", topic: []),
 ]
 
+class TabList: ObservableObject {
+    
+    @Published var tabs = [
+        Tab(key: "0", value: "Top10", topic: []),
+        Tab(key: "1", value: "全部", topic: []),
+        Tab(key: "2", value: "创意", topic: []),
+        Tab(key: "3", value: "技术", topic: []),
+        Tab(key: "4", value: "问与答", topic: []),
+        Tab(key: "5", value: "游戏", topic: []),
+        Tab(key: "6", value: "交易", topic: []),
+//        Tab(key: "7", value: "创意", topic: []),
+//        Tab(key: "8", value: "技术", topic: []),
+//        Tab(key: "9", value: "问与答", topic: []),
+//        Tab(key: "10", value: "游戏", topic: []),
+//        Tab(key: "11", value: "交易", topic: []),
+    ]
+}
+
 let Topics = [
     Topic(name: "George", time: "5分钟前", imageName: "1", title: "让你的员工为共同的目标工作，绝不要为你的人格魅力工作。", detail: "让你的员工为共同的目标工作，绝不要为你的人格魅力工作让你的员工为共同的目标工作，绝不要为你的人格魅力工作。让你的员工为共同的目标工作，绝不要为你的人格魅力工作。让你的员工为共同的目标工作，绝不要为你的人格魅力工作让你的员工为共同的目标工作，绝不要为你的人格魅力工作。让你的员工为共同的目标工作，绝不要为你的人格魅力工作。让你的员工为共同的目标工作，绝不要为你的人格魅力工作让你的员工为共同的目标工作，绝不要为你的人格魅力工作。让你的员工为共同的目标工作，绝不要为你的人格魅力工作", tag: "IOS", reply: 36),
     Topic(name: "Tom", time: "2分钟前", imageName: "2", title: "HarmonyOS的原子化理念是不是也导致应用开发的概念也需要做个转变？", detail: "HarmonyOS的原子化理念是不是也导致应用开发的概念也需要做个转变？HarmonyOS的原子化理念是不是也导致应用开发的概念也需要做个转变？", tag: "信息安全", reply: 75),

@@ -44,6 +44,7 @@ struct ContentView: View {
             }
             .accentColor(Color("4474FF"))
         }
+//        .environmentObject(TabList())
     }
     
     func fetchData() {

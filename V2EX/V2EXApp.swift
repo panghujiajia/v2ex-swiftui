@@ -12,6 +12,8 @@ var v2ex = V2exAPI()
 
 @main
 struct V2EXApp: App {
+//    @StateObject var data = TabList()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
