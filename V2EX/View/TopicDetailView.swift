@@ -23,9 +23,9 @@ extension UINavigationController: UIGestureRecognizerDelegate {
 struct TopicDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    var topic: V2Topic
+    let topic: Topic
     
-    @State var commentList: [V2Comment]?
+    @State var commentList: [Comment]?
     
     let markdownString = """
       ## Try MarkdownUI
@@ -40,10 +40,10 @@ struct TopicDetailView: View {
             ScrollView(.vertical, showsIndicators: false){
                 VStack(spacing: 0){
                     VStack(alignment: .leading){
-                        TopicUserView(avatar: (topic.member?.avatarLarge)!, username: (topic.member?.username)!, lastReply: topic.lastModified!)
+                        TopicUserView(topic: topic)
                         .padding(.top)
                         // 标题
-                        Text(topic.title ?? "")
+                        Text(topic.title)
                             .font(.headline)
                             .foregroundColor(Color("333333"))
                             .multilineTextAlignment(.leading)
@@ -51,7 +51,7 @@ struct TopicDetailView: View {
                             .padding(.bottom)
                             .padding(.top, 6)
                         
-                        Markdown(topic.content ?? "")
+                        Markdown(topic.content)
                             .font(.body)
                             .fontWeight(.regular)
                             .foregroundColor(Color("333333"))
@@ -111,7 +111,7 @@ struct TopicDetailView: View {
 //                    .background(Color("F6F6F6"))
 //                    .padding(.bottom)
                     
-                    TopicInfoView(name: (topic.node?.title)!, replies: topic.replies!)
+                    TopicInfoView(topic: topic)
                         .padding(.horizontal)
                         .padding(.bottom)
                     
@@ -125,7 +125,7 @@ struct TopicDetailView: View {
                                 let comment = commentList![index]
                                 
                                 VStack(alignment: .leading){
-                                    TopicUserView(avatar: (comment.member.avatarLarge)!, username: (comment.member.username)!, lastReply: comment.created)
+                                    TopicUserView(topic: topic)
                                     
                                     Markdown(comment.content)
                                         .font(.body)
@@ -193,23 +193,18 @@ struct TopicDetailView: View {
     
     
     func loadComments(page: Int) {
-        Task {
-            do {
-                let res = try await v2ex.repliesAll(topicId: topic.id)
-                commentList = res
-            } catch {
-            }
-        }
+//        Task {
+//            do {
+//                let res = try await v2ex.repliesAll(topicId: topic.id) as [Comment]?
+//                commentList = res
+//            } catch {
+//            }
+//        }
     }
 }
 
 struct TopicDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TopicDetailView(topic: PreviewData.topic,
-                        commentList: [
-                            PreviewData.comment,
-                            PreviewData.comment,
-                            PreviewData.comment
-                        ])
+        TopicDetailView(topic: PreviewData.topic)
     }
 }

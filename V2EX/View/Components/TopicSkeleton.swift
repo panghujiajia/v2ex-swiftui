@@ -40,7 +40,7 @@ struct TopicSkeleton: View {
                         .shape(type: .rectangle)
                         .multiline(lines: 2, scales: [1: 0.6])
                         .animation(type: .pulse())
-                        .frame(width: .infinity, height: 40)
+                        .frame(height: 40)
                         .padding(.top, 6)
                     HStack {
                         Text("")

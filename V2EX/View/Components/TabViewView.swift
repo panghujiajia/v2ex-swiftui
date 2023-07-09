@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SwiftSoup
 import V2exAPI
 
 struct TabViewView: View {
     @State var selectedIndex = 0
     @Namespace var ScrollTabViewAnimation
     
-    @State var topics: [V2Topic]?
+    @State var topics: [Topic]?
     
 //    @EnvironmentObject var data: TabList
     
@@ -26,14 +27,13 @@ struct TabViewView: View {
                 VStack(spacing: 0){
                     ScrollView(.horizontal, showsIndicators: false){
                         HStack{
-                            ForEach(0..<Tabs.count, id: \.self) { index in
+                            ForEach(Array(data.tabs.enumerated()), id: \.offset) { index, tab in
                                 ZStack(alignment: .bottom){
-                                    Text(Tabs[index].value)
+                                    Text(tab.value)
                                         .fontWeight(selectedIndex == index ? .bold : .regular)
                                         .foregroundColor(selectedIndex == index ? Color("4474FF") : Color("999999"))
                                         .frame(maxHeight: .infinity)
                                         .padding(.horizontal, 10)
-                                        .id(index)
                                     if selectedIndex == index {
                                         Capsule()
                                             .fill(Color("4474FF"))
@@ -49,12 +49,14 @@ struct TabViewView: View {
                                 }
                                 .frame(height: 40)
                                 .onTapGesture {
-                                    withAnimation(.spring(response: 0.3,dampingFraction: 0.7)) {
-                                        selectedIndex = index
-                                        ScrollViewProxy.scrollTo(selectedIndex, anchor: .center)
-                                    }
-                                    Task {
-                                        await self.loadData(index: index)
+                                    if selectedIndex != index {
+                                        withAnimation(.spring(response: 0.3,dampingFraction: 0.7)) {
+                                            selectedIndex = index
+                                            ScrollViewProxy.scrollTo(selectedIndex, anchor: .center)
+                                        }
+                                        Task {
+                                            await self.loadData(index: index)
+                                        }
                                     }
                                 }
                             }
@@ -77,21 +79,22 @@ struct TabViewView: View {
                             Task {
                                 await self.loadData(index: newTab)
                                 
-                                if newTab + 1 <= Tabs.count && self.data.tabs[newTab + 1].topic.isEmpty {
-                                    await self.loadData(index: newTab + 1)
-                                }
+//                                if newTab + 1 <= data.tabs.count && self.data.tabs[newTab + 1].topic!.isEmpty {
+//                                    await self.loadData(index: newTab + 1)
+//                                }
                             }
                         }
                     )){
-                        ForEach(0..<data.tabs.count, id: \.self) { index in
+                        ForEach(Array(data.tabs.enumerated()), id: \.offset) { index, tab in
                             ZStack(){
-                                if data.tabs[index].topic.isEmpty {
+                                if tab.topic!.isEmpty {
                                     TopicSkeleton()
                                 } else {
                                     ScrollView(.vertical, showsIndicators: false){
                                         VStack(spacing: 0){
-                                            ForEach(data.tabs[index].topic) { topic in
+                                            ForEach(Array(tab.topic!.enumerated()), id: \.offset) { i, topic in
                                                 VStack(spacing: 0){
+//                                                    Text("\(tab.topic!.count)")
                                                     TopicItemView(topic: topic)
                                                     Divider()
                                                         .padding(.leading)
@@ -100,15 +103,10 @@ struct TabViewView: View {
                                                 }
                                             }
                                         }
-                                        .refreshable {
-                                            Task {
-                                                self.data.tabs[selectedIndex].topic = []
-                                                await self.loadData(index: selectedIndex)
-                                                
-                                                if selectedIndex + 1 <= Tabs.count && self.data.tabs[selectedIndex + 1].topic.isEmpty {
-                                                    await self.loadData(index: selectedIndex + 1)
-                                                }
-                                            }
+                                    }
+                                    .refreshable {
+                                        Task {
+                                            await self.loadData(index: selectedIndex)
                                         }
                                     }
                                 }
@@ -124,38 +122,26 @@ struct TabViewView: View {
         .onAppear {
             Task {
                 await self.loadData(index: 0)
-                
-                if self.data.tabs[1].topic.isEmpty {
-                    await self.loadData(index: 1)
-                }
+//                if self.data.tabs[1].topic!.isEmpty {
+//                    await self.loadData(index: 1)
+//                }
             }
         }
     }
     
     func loadData(index: Int) async {
-        
-        do {
 //            var topics: [V2Topic]?
-            
-            if index == 0 {
-                
-                topics = try await v2ex.hotTopics()
-            } else if index == 1 {
-                
-                topics = try await v2ex.latestTopics()
-            } else {
-                topics = try await v2ex.topics(nodeName: "pwa", page: 1)?.result
-                
-//                print(topics)
-            }
-            
-            self.data.tabs[index].topic = topics ?? []
-            
-//            self.topics = topics ?? []
-            
-        } catch {
-            print("error")
+        let tab = data.tabs[index].key
+        if tab == "HOT" {
+            topics = await api.getHotTopics()
+        } else {
+            print("节点：\(tab)")
+            topics = await api.getTabTopics(tab: tab)
         }
+        print(topics!)
+        self.data.tabs[index].topic = topics ?? []
+
+//        self.topics = topics ?? []
     }
 }
 

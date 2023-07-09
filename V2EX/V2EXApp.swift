@@ -10,6 +10,8 @@ import V2exAPI
 
 var v2ex = V2exAPI()
 
+let api = V2exService()
+
 @main
 struct V2EXApp: App {
 //    @StateObject var data = TabList()
