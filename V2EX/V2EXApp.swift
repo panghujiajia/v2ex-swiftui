@@ -6,9 +6,6 @@
 //
 
 import SwiftUI
-import V2exAPI
-
-var v2ex = V2exAPI()
 
 let api = V2exService()
 

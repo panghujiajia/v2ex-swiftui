@@ -13,8 +13,6 @@ struct TabViewView: View {
     @State var selectedIndex = 0
     @Namespace var ScrollTabViewAnimation
     
-    @State var topics: [Topic]?
-    
 //    @EnvironmentObject var data: TabList
     
 //    @StateObject var data = TabList()
@@ -94,7 +92,6 @@ struct TabViewView: View {
                                         VStack(spacing: 0){
                                             ForEach(Array(tab.topic!.enumerated()), id: \.offset) { i, topic in
                                                 VStack(spacing: 0){
-//                                                    Text("\(tab.topic!.count)")
                                                     TopicItemView(topic: topic)
                                                     Divider()
                                                         .padding(.leading)
@@ -106,7 +103,7 @@ struct TabViewView: View {
                                     }
                                     .refreshable {
                                         Task {
-                                            await self.loadData(index: selectedIndex)
+                                            await self.loadData(index: selectedIndex, refresh: true)
                                         }
                                     }
                                 }
@@ -129,19 +126,22 @@ struct TabViewView: View {
         }
     }
     
-    func loadData(index: Int) async {
-//            var topics: [V2Topic]?
+    func loadData(index: Int, refresh: Bool? = false) async {
         let tab = data.tabs[index].key
-        if tab == "HOT" {
-            topics = await api.getHotTopics()
-        } else {
-            print("节点：\(tab)")
-            topics = await api.getTabTopics(tab: tab)
+        let lastRequestTime = data.tabs[index].lastRequestTime
+        
+        // 刷新或者初次加载或者距离上次加载超过gap分钟才去请求数据
+        if refresh! || lastRequestTime == 0 || isDifferenceFifteenMinutes(timestamp: TimeInterval(lastRequestTime), gap: 1) {
+            print("加载中...")
+            var topics: [Topic]?
+            if tab == "HOT" {
+                topics = await api.getHotTopics()!
+            } else {
+                topics = await api.getTabTopics(tab: tab)
+            }
+            self.data.tabs[index].topic = topics ?? []
+            self.data.tabs[index].lastRequestTime = Int(Date().timeIntervalSince1970)
         }
-        print(topics!)
-        self.data.tabs[index].topic = topics ?? []
-
-//        self.topics = topics ?? []
     }
 }
 

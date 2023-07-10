@@ -19,7 +19,7 @@ struct TopicUserView: View {
             HStack(spacing: 0){
                 KFImage.url(URL(string: topic.avatar))
                     .placeholder{
-                        Image("1")
+                        Image("AvatarPlaceholder")
                     }
                     .resizable()
                     .frame(width: 30, height: 30)

@@ -51,7 +51,7 @@ struct TopicDetailView: View {
                             .padding(.bottom)
                             .padding(.top, 6)
                         
-                        Markdown(topic.content)
+                        Markdown("")
                             .font(.body)
                             .fontWeight(.regular)
                             .foregroundColor(Color("333333"))

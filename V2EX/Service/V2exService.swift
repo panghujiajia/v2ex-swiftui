@@ -25,29 +25,28 @@ extension Date {
     }
 }
 
+//字符串转Date
+func getDateFromTime(time:String) -> Date{
+    let dateformatter = DateFormatter()
+    //自定义日期格式
+    dateformatter.dateFormat="yyyy-MM-dd HH:mm:ss Z"
+    return dateformatter.date(from: time)!
+}
+//当前时间与时间戳的差值是否大于 gap 分钟
+func isDifferenceFifteenMinutes(timestamp: TimeInterval, gap: Int) -> Bool {
+    let currentDate = Date()
+    let date = Date(timeIntervalSince1970: timestamp)
+    
+    let difference = currentDate.timeIntervalSince(date) // 当前时间与时间戳的差值
+    return Int(abs(difference)) > (gap * 60)
+}
+
 /// V2exService
 public struct V2exService {
     
     public var session = URLSession.shared
     
     private let prefix = "https://v2ex.com"
-    
-    /**
-     HTTP 请求
-     */
-    public func request() async -> String {
-        do {
-            
-            let url = URL(string: prefix + "/?tab=tech")!
-            
-            let (data, _) = try await session.data(from: url)
-            
-            return String(decoding: data, as: UTF8.self)
-        } catch {
-            print("error")
-            return ""
-        }
-    }
     
     /**
      热门帖子
@@ -57,8 +56,25 @@ public struct V2exService {
             let url = URL(string: prefix + "/api/topics/hot.json")!
             
             let (data, _) = try await session.data(from: url)
-//            print(String(decoding: data, as: UTF8.self))
-            return try JSONDecoder().decode([Topic].self, from: data)
+            
+            let decoder = JSONDecoder()
+            let product = try decoder.decode([V2Topic].self, from: data)
+            
+            var result = [Topic]()
+            for item in product {
+                let obj: Topic = Topic(
+                    id: item.id,
+                    title: item.title!,
+                    replies: item.replies!,
+                    node_name: item.node!.title!,
+                    node_value: item.node!.name,
+                    author: item.member!.username!,
+                    avatar: item.member!.avatarLarge!,
+                    last_reply_time: Date(timeIntervalSince1970: TimeInterval(item.lastModified!)).fromNow()
+                )
+                result.append(obj)
+            }
+            return result
         } catch {
             print("error")
             return []
@@ -80,7 +96,7 @@ public struct V2exService {
             
             var result = [Topic]()
             
-            for (index, el) in links.enumerated() {
+            for el in links {
                 let id = try el.select(".topic-link").attr("href")
                 let title = try el.select(".topic-link").text()
                 var replies = try el.select("td").last()!.select("a").text()
@@ -90,29 +106,17 @@ public struct V2exService {
                 node_value = node_value.split(separator: "/").map(String.init)[1]
                 let author = try el.select(".topic_info strong").first()!.children().text()
                 let avatar = try el.select(".avatar").attr("src")
-                let last_reply_time = try el.select(".topic_info span").text()
-                if index < 2 {
-//                    print((
-//                        id: id,
-//                        title: title,
-//                        replies: replies,
-//                        node_name: node_name,
-//                        node_value: node_value,
-//                        author: author,
-//                        avatar: avatar,
-//                        last_reply_time: last_reply_time
-//                    ))
-                }
+                let last_reply_time = try el.select(".topic_info span").attr("title")
+                
                 let obj: Topic = Topic(
                     id: (id as NSString).integerValue,
                     title: title,
-                    content: "",
                     replies: (replies as NSString).integerValue,
                     node_name: node_name,
                     node_value: node_value,
                     author: author,
                     avatar: avatar,
-                    last_reply_time: last_reply_time
+                    last_reply_time: getDateFromTime(time: last_reply_time).fromNow()
                 )
                 result.append(obj)
             }
