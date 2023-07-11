@@ -16,7 +16,7 @@ struct TopicItemView: View {
             TopicDetailView(topic: topic)
         } label: {
             VStack(alignment: .leading) {
-                TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false)
+                TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false, like_num: "")
                 Text(topic.title)
                     .font(.headline)
                     .foregroundColor(Color("333333"))

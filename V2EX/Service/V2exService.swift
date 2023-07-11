@@ -159,6 +159,8 @@ public struct V2exService {
             var master = ""
             var content = ""
             var publish_time = ""
+            var page = 0
+            page = try boxs.get(1).select(".cell .page_input").first()!.parent()!.select("a").count
             
             var subtle_list = [Subtle]()
             
@@ -166,7 +168,7 @@ public struct V2exService {
             
             if p == 1 {
                 master = try boxs.get(0).select(".header .gray a").first()!.text()
-                content = try boxs.get(0).select(".cell .topic_content").text()
+                content = try boxs.get(0).select(".cell .topic_content").html()
                 publish_time = try boxs.get(0).select(".header .gray span").attr("title")
                 publish_time = getDateFromTime(time: publish_time).fromNow()
                 
@@ -183,33 +185,34 @@ public struct V2exService {
                         subtle_content: subtle_content
                     ))
                 }
+            }
+            
+            let replies: Elements = try boxs.get(1).select(".cell")
+            
+            for reply in replies {
+                let author = try reply.select(".dark").text()
+                let avatar = try reply.select(".avatar").attr("src")
+                let is_master = master == author
+                var reply_time = try reply.select(".ago").attr("title")
+                let like_num = try reply.select(".fade").text()
+                let content = try reply.select(".reply_content").html()
                 
-                
-                let replies: Elements = try boxs.get(1).select(".cell")
-                
-                for reply in replies {
-                    let author = try reply.select(".dark").text()
-                    let avatar = try reply.select(".avatar").attr("src")
-                    let is_master = master == author
-                    var reply_time = try reply.select(".ago").attr("title")
-                    let like_num = try reply.select(".fade").text()
-                    let content = try reply.select(".reply_content").text()
-                    
-                    if !author.isEmpty {
-                        reply_time = getDateFromTime(time: reply_time).fromNow()
-                        let obj: Reply = Reply(
-                            author: author,
-                            avatar: avatar,
-                            is_master: is_master,
-                            reply_time: reply_time,
-                            like_num: like_num,
-                            content: content
-                        )
-                        reply_list.append(obj)
-                    }
+                if !author.isEmpty {
+                    reply_time = getDateFromTime(time: reply_time).fromNow()
+                    let obj: Reply = Reply(
+                        author: author,
+                        avatar: avatar,
+                        is_master: is_master,
+                        reply_time: reply_time,
+                        like_num: like_num,
+                        content: content
+                    )
+                    reply_list.append(obj)
                 }
             }
+            
             return Comment(
+                page: page,
                 content: content,
                 publish_time: publish_time,
                 subtle_list: subtle_list,

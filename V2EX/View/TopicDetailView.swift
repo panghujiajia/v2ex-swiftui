@@ -27,12 +27,14 @@ struct TopicDetailView: View {
     
     @State var comment: Comment?
     
+    @State private var page = 1
+    
     var body: some View {
         VStack(spacing: 0){
             ScrollView(.vertical, showsIndicators: false){
                 VStack(spacing: 0){
                     VStack(alignment: .leading){
-                        TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false)
+                        TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false, like_num: "")
                             .padding(.top)
                         // 标题
                         Text(topic.title)
@@ -62,7 +64,7 @@ struct TopicDetailView: View {
                     .padding(.bottom)
                     
                     
-                    if comment != nil && comment!.subtle_list != nil {
+                    if comment != nil && !comment!.subtle_list!.isEmpty {
                         Divider()
                             .opacity(0.4)
                         VStack(spacing: 0){
@@ -105,7 +107,7 @@ struct TopicDetailView: View {
                             ForEach(Array(comment!.reply_list!.enumerated()), id: \.offset) { index, reply in
                                 VStack(alignment: .leading){
                                     HStack(alignment: .top) {
-                                        TopicUserView(avatar: reply.avatar, author: reply.author, time: reply.reply_time, is_master: reply.is_master)
+                                        TopicUserView(avatar: reply.avatar, author: reply.author, time: reply.reply_time, is_master: reply.is_master, like_num: reply.like_num)
                                         Spacer()
                                         Text("\(index + 1)楼")
                                             .font(.footnote)
@@ -134,7 +136,7 @@ struct TopicDetailView: View {
             }
             .onAppear {
                 Task {
-                    await loadData(page: 1)
+                    await loadData()
                 }
             }
             
@@ -180,9 +182,21 @@ struct TopicDetailView: View {
     }
     
     
-    func loadData(page: Int) async {
-        comment = await api.getTopicDetail(id: topic.id, p: page)
-        print(comment!)
+    func loadData() async {
+        let result: Comment = await api.getTopicDetail(id: topic.id, p: self.page)!
+        // 初次加载
+        if self.page == 1 {
+            comment = result
+        } else {
+            var reply_list = comment!.reply_list
+            reply_list! += result.reply_list!
+            comment!.reply_list = reply_list
+        }
+        // 有分页
+        if comment!.page != self.page {
+            self.page += 1
+            await loadData()
+        }
     }
 }
 

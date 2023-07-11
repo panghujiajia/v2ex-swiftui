@@ -13,7 +13,8 @@ struct TopicUserView: View {
     let avatar: String
     let author: String
     let time: String
-    let is_master: Bool?
+    let is_master: Bool
+    let like_num: String?
     
     var body: some View {
         NavigationLink{
@@ -27,12 +28,12 @@ struct TopicUserView: View {
                     .resizable()
                     .frame(width: 30, height: 30)
                     .cornerRadius(4)
-                VStack(alignment: .leading){
-                    HStack() {
+                VStack(alignment: .leading, spacing: 0){
+                    HStack(alignment: .center) {
                         Text(author)
                             .font(.subheadline)
                             .foregroundColor(Color("000000"))
-                        if is_master! {
+                        if is_master {
                             Text("OP")
                                 .font(.caption2)
                                 .foregroundColor(Color("4474FF"))
@@ -41,6 +42,18 @@ struct TopicUserView: View {
                                     RoundedRectangle(cornerRadius: 4, style: .continuous)
                                         .stroke(Color("4474FF"), lineWidth: 1)
                                 )
+                        }
+                        if !like_num!.isEmpty {
+                            HStack(spacing: 0) {
+                                Image("heart")
+                                    .resizable()
+                                    .frame(width: 14, height: 14)
+                                Text(like_num)
+                                    .font(.footnote)
+                                    .foregroundColor(Color.gray)
+                                    .padding(.leading, 4)
+                            }
+                            .padding(.leading, 6)
                         }
                     }
                     Text(time)
@@ -58,6 +71,6 @@ struct TopicUserView: View {
 struct TopicUserView_Previews: PreviewProvider {
     static var previews: some View {
         let topic = PreviewData.topic
-        TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false)
+        TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false, like_num: "3")
     }
 }

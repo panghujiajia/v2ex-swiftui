@@ -14,7 +14,7 @@ import V2exAPI
 
 struct PreviewData {
     static let topic = Topic(
-        id: 1,
+        id: 955532,
         title: "♥ Introducing Project Babel 2.0",
         replies: 5,
         node_name: "Project Babel",
@@ -25,6 +25,7 @@ struct PreviewData {
     )
     
     static let comment = Comment(
+        page: 1,
         content: "Project Babel 2.0 is here.你可能会觉得眼前的这个网站实在太简陋，你的感觉是对的，因为这个网站的 Mobile 版本先上线了，这个版本为所有的 iDevice 优化。接下来我会从各方面来给网站一个尽量详尽的解释。首先，这个网站的技术架构和之前的 V2EX 完全不同。之前的 V2EX 跑在 LAMP 上，而现在的新版本跑在 Google 的云里。",
         publish_time: "1分钟前",
         subtle_list: [PreviewData.subtle_list],
@@ -58,10 +59,11 @@ public struct Topic: Identifiable, Decodable {
 }
 
 struct Comment: Decodable {
+    public let page: Int
     public let content: String
     public let publish_time: String
     public let subtle_list: [Subtle]?
-    public let reply_list: [Reply]?
+    public var reply_list: [Reply]?
 }
 
 struct Reply: Decodable {
