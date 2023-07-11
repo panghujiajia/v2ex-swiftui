@@ -130,8 +130,8 @@ struct TabViewView: View {
         let tab = data.tabs[index].key
         let lastRequestTime = data.tabs[index].lastRequestTime
         
-        // 刷新或者初次加载或者距离上次加载超过gap分钟才去请求数据
-        if refresh! || lastRequestTime == 0 || isDifferenceFifteenMinutes(timestamp: TimeInterval(lastRequestTime), gap: 1) {
+        // 刷新或者初次加载或者距离上次加载超过 gap 分钟才去请求数据
+        if refresh! || lastRequestTime == 0 || isDifferenceFifteenMinutes(timestamp: TimeInterval(lastRequestTime), gap: 10) {
             print("加载中...")
             var topics: [Topic]?
             if tab == "HOT" {

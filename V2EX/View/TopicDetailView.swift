@@ -25,23 +25,15 @@ struct TopicDetailView: View {
     
     let topic: Topic
     
-    @State var commentList: [Comment]?
-    
-    let markdownString = """
-      ## Try MarkdownUI
-
-      **MarkdownUI** is a native Markdown renderer for SwiftUI
-      compatible with the
-      [GitHub Flavored Markdown Spec](https://github.github.com/gfm/).
-      """
+    @State var comment: Comment?
     
     var body: some View {
         VStack(spacing: 0){
             ScrollView(.vertical, showsIndicators: false){
                 VStack(spacing: 0){
                     VStack(alignment: .leading){
-                        TopicUserView(topic: topic)
-                        .padding(.top)
+                        TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false)
+                            .padding(.top)
                         // 标题
                         Text(topic.title)
                             .font(.headline)
@@ -50,66 +42,55 @@ struct TopicDetailView: View {
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .padding(.bottom)
                             .padding(.top, 6)
-                        
-                        Markdown("")
-                            .font(.body)
-                            .fontWeight(.regular)
-                            .foregroundColor(Color("333333"))
-                            .multilineTextAlignment(.leading)
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                        
-                        // 详情
-//                        Text(topic?.member?.username ?? "")
-//                            .font(.body)
-//                            .fontWeight(.regular)
-//                            .foregroundColor(Color("333333"))
-//                            .multilineTextAlignment(.leading)
-//                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                        
-                        
+                        if comment != nil {
+                            Markdown(comment!.content)
+                                .font(.body)
+                                .fontWeight(.regular)
+                                .foregroundColor(Color("333333"))
+                                .multilineTextAlignment(.leading)
+                                .frame(maxWidth: .infinity, alignment: .topLeading)
+                        } else {
+                            Text("")
+                                .skeleton(with: true)
+                                .shape(type: .rectangle)
+                                .multiline(lines: 5, scales: [1: 0.6])
+                                .animation(type: .pulse())
+                                .frame(height: 100)
+                        }
                     }
                     .padding(.horizontal)
                     .padding(.bottom)
                     
                     
-//                    Divider()
-//                        .opacity(0.4)
-//
-//                    VStack(spacing: 0){
-//                        Text("第一条附言：")
-//                            .font(.subheadline)
-//                            .fontWeight(.medium)
-//                            .foregroundColor(Color("333333"))
-//                            .multilineTextAlignment(.leading)
-//                            .frame(maxWidth: .infinity, alignment: .topLeading)
-//                            .padding(.bottom, 10)
-//                        Text(topic?.member?.username ?? "")
-//                            .font(.body)
-//                            .fontWeight(.regular)
-//                            .foregroundColor(Color("666666"))
-//                            .multilineTextAlignment(.leading)
-//                            .frame(maxWidth: .infinity, alignment: .topLeading)
-//
-//                        Divider()
-//                            .opacity(0.4)
-//                            .padding(.vertical)
-//
-//                        Text("第二条附言：")
-//                            .font(.subheadline)
-//                            .fontWeight(.medium)
-//                            .foregroundColor(Color("333333"))
-//                            .multilineTextAlignment(.leading)
-//                            .frame(maxWidth: .infinity, alignment: .topLeading)
-//                            .padding(.bottom, 10)
-//                        Text(topic?.member?.username ?? "")
-//                            .font(.body)
-//                            .foregroundColor(Color("666666"))
-//                            .multilineTextAlignment(.leading)
-//                            .frame(maxWidth: .infinity, alignment: .topLeading)
-//                    }
-//                    .padding()
-//                    .background(Color("F6F6F6"))
-//                    .padding(.bottom)
+                    if comment != nil && comment!.subtle_list != nil {
+                        Divider()
+                            .opacity(0.4)
+                        VStack(spacing: 0){
+                            ForEach(Array(comment!.subtle_list!.enumerated()), id: \.offset) { index, subtle in
+                                Text("第 \(index + 1) 条附言 · \(subtle.subtle_time)")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(Color("333333"))
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                                    .padding(.bottom, 10)
+                                Text(subtle.subtle_content)
+                                    .font(.body)
+                                    .fontWeight(.regular)
+                                    .foregroundColor(Color("666666"))
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                                if (index + 1) < comment!.subtle_list!.count {
+                                    Divider()
+                                        .opacity(0.4)
+                                        .padding(.vertical)
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color("F6F6F6"))
+                        .padding(.bottom)
+                    }
                     
                     TopicInfoView(topic: topic)
                         .padding(.horizontal)
@@ -119,15 +100,18 @@ struct TopicDetailView: View {
                         .fill(Color("F6F6F6"))
                         .frame(width: UIScreen.main.bounds.width, height: 10)
                     
-                    if (commentList != nil) {
+                    if comment != nil && comment!.reply_list != nil {
                         VStack(spacing: 0){
-                            ForEach(0 ..< commentList!.count, id: \.self) { index in
-                                let comment = commentList![index]
-                                
+                            ForEach(Array(comment!.reply_list!.enumerated()), id: \.offset) { index, reply in
                                 VStack(alignment: .leading){
-                                    TopicUserView(topic: topic)
-                                    
-                                    Markdown(comment.content)
+                                    HStack(alignment: .top) {
+                                        TopicUserView(avatar: reply.avatar, author: reply.author, time: reply.reply_time, is_master: reply.is_master)
+                                        Spacer()
+                                        Text("\(index + 1)楼")
+                                            .font(.footnote)
+                                            .foregroundColor(Color("999999"))
+                                    }
+                                    Markdown(reply.content)
                                         .font(.body)
                                         .fontWeight(.regular)
                                         .foregroundColor(Color("333333"))
@@ -143,11 +127,15 @@ struct TopicDetailView: View {
                                     .padding(.leading, 40)
                             }
                         }
+                    } else {
+                        TopicSkeleton()
                     }
                 }
             }
             .onAppear {
-                loadComments(page: 1)
+                Task {
+                    await loadData(page: 1)
+                }
             }
             
             ZStack{
@@ -192,19 +180,14 @@ struct TopicDetailView: View {
     }
     
     
-    func loadComments(page: Int) {
-//        Task {
-//            do {
-//                let res = try await v2ex.repliesAll(topicId: topic.id) as [Comment]?
-//                commentList = res
-//            } catch {
-//            }
-//        }
+    func loadData(page: Int) async {
+        comment = await api.getTopicDetail(id: topic.id, p: page)
+        print(comment!)
     }
 }
 
 struct TopicDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TopicDetailView(topic: PreviewData.topic)
+        TopicDetailView(topic: PreviewData.topic, comment: PreviewData.comment)
     }
 }
