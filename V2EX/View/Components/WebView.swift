@@ -10,14 +10,10 @@ import WebKit
 
 struct WebView : UIViewRepresentable {
     var html: String
-    
     var notificationName: String
-//    @Binding var height: CGFloat
-    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
     func makeUIView(context: Context) -> WKWebView  {
         let webView = WKWebView()
         webView.navigationDelegate = context.coordinator
@@ -26,24 +22,18 @@ struct WebView : UIViewRepresentable {
         webView.addObserver(context.coordinator, forKeyPath: "scrollView.contentSize", options: .new, context: nil)
         return webView
     }
-
     func updateUIView(_ webView: WKWebView, context: Context) {
         webView.loadHTMLString(html, baseURL: nil)
     }
-    
     class Coordinator: NSObject, WKNavigationDelegate {
         var parent: WebView
-        
         var webViewHeight: CGFloat = .zero
-        
         init(_ parent: WebView) {
             self.parent = parent
         }
-        
         deinit {
             NotificationCenter.default.removeObserver(self)
         }
-        
         override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
             if keyPath == "scrollView.contentSize" {
                 if let webView = object as? WKWebView {
@@ -57,7 +47,6 @@ struct WebView : UIViewRepresentable {
         }
     }
 }
-
 struct TopicReplyHtmlView: View {
     @State private var height: CGFloat = .zero
     var html: String

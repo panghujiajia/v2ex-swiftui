@@ -12,6 +12,7 @@ import V2exAPI
 struct TabViewView: View {
     @State var selectedIndex = 0
     @Namespace var ScrollTabViewAnimation
+    @State var loading: Bool = true
     
 //    @EnvironmentObject var data: TabList
     
@@ -85,8 +86,11 @@ struct TabViewView: View {
                     )){
                         ForEach(Array(data.tabs.enumerated()), id: \.offset) { index, tab in
                             ZStack(){
-                                if tab.topic!.isEmpty {
+                                if loading {
                                     TopicSkeleton()
+                                } else if tab.topic!.isEmpty {
+                                    Text("暂无数据")
+                                        .foregroundColor(Color("999999"))
                                 } else {
                                     ScrollView(.vertical, showsIndicators: false){
                                         VStack(spacing: 0){
@@ -127,6 +131,7 @@ struct TabViewView: View {
     }
     
     func loadData(index: Int, refresh: Bool? = false) async {
+        loading = true
         let tab = data.tabs[index].key
         let lastRequestTime = data.tabs[index].lastRequestTime
         
@@ -138,6 +143,7 @@ struct TabViewView: View {
             self.data.tabs[index].topic = topics ?? []
             self.data.tabs[index].lastRequestTime = Int(Date().timeIntervalSince1970)
         }
+        loading = false
     }
 }
 

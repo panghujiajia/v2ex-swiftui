@@ -134,7 +134,7 @@ public struct V2exService {
      */
     func getTopicDetail(id: Int, p: Int) async -> Comment? {
         do {
-            let url = URL(string: prefix + "/t/\(957317)?p=\(p)")!
+            let url = URL(string: prefix + "/t/\(id)?p=\(p)")!
             
             let (data, _) = try await session.data(from: url)
             
@@ -145,7 +145,7 @@ public struct V2exService {
             var content = ""
             var publish_time = ""
             var page = 1
-//            page = try boxs.get(1).select(".cell .page_input").first()!.parent()!.select("a").count
+            page = try boxs.get(1).select(".cell .page_input").first()?.parent()?.select("a").count ?? 1
             
             var subtle_list = [Subtle]()
             
@@ -173,7 +173,6 @@ public struct V2exService {
             }
             
             let replies: Elements = try boxs.get(1).select(".cell")
-            
             for reply in replies {
                 let author = try reply.select(".dark").text()
                 let avatar = try reply.select(".avatar").attr("src")

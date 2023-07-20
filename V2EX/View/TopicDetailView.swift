@@ -34,7 +34,7 @@ struct TopicDetailView: View {
             ScrollView(.vertical, showsIndicators: false){
                 VStack(spacing: 0){
                     VStack(alignment: .leading){
-                        TopicUserView(avatar: topic.avatar, author: topic.author, time: topic.last_reply_time, is_master: false, like_num: "")
+                        TopicUserView(avatar: topic.avatar, author: topic.author, time: comment?.publish_time ?? topic.last_reply_time, is_master: false, like_num: "")
                             .padding(.top)
                         // 标题
                         Text(topic.title)
