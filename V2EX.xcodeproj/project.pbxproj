@@ -10,11 +10,14 @@
 		3D1E494D29E81C4C0030E368 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E494C29E81C4C0030E368 /* MarkdownUI */; };
 		3D1E495029E81C5D0030E368 /* V2exAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E494F29E81C5D0030E368 /* V2exAPI */; };
 		3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E495229E82C3C0030E368 /* Kingfisher */; };
+		3D4B39032A63F497007EA44A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4B39022A63F497007EA44A /* WebView.swift */; };
+		3D6484AB2A68AF8500D03399 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D6484AA2A68AF8500D03399 /* MarkdownView */; };
 		3D894EF22A58591E009D6240 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D894EF12A58591E009D6240 /* SkeletonView */; };
 		3D894EF52A585CAC009D6240 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D894EF42A585CAC009D6240 /* SkeletonUI */; };
 		3D894EF72A586724009D6240 /* TopicSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D894EF62A586724009D6240 /* TopicSkeleton.swift */; };
 		3DA6841F2A599F1D00E972AC /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 3DA6841E2A599F1D00E972AC /* SwiftSoup */; };
 		3DA684212A5AE22200E972AC /* V2exService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA684202A5AE22200E972AC /* V2exService.swift */; };
+		3DA758152A681E3000CCE641 /* Html.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA758142A681E3000CCE641 /* Html.swift */; };
 		3DBD2C2E29E4235800EDC1EE /* V2EXApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD2C2D29E4235800EDC1EE /* V2EXApp.swift */; };
 		3DBD2C3029E4235800EDC1EE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBD2C2F29E4235800EDC1EE /* ContentView.swift */; };
 		3DBD2C3229E4235900EDC1EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DBD2C3129E4235900EDC1EE /* Assets.xcassets */; };
@@ -32,8 +35,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D4B39022A63F497007EA44A /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		3D894EF62A586724009D6240 /* TopicSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSkeleton.swift; sourceTree = "<group>"; };
 		3DA684202A5AE22200E972AC /* V2exService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2exService.swift; sourceTree = "<group>"; };
+		3DA758142A681E3000CCE641 /* Html.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Html.swift; sourceTree = "<group>"; };
 		3DBD2C2A29E4235800EDC1EE /* V2EX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = V2EX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DBD2C2D29E4235800EDC1EE /* V2EXApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2EXApp.swift; sourceTree = "<group>"; };
 		3DBD2C2F29E4235800EDC1EE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -60,6 +65,7 @@
 				3D894EF22A58591E009D6240 /* SkeletonView in Frameworks */,
 				3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */,
 				3D1E495029E81C5D0030E368 /* V2exAPI in Frameworks */,
+				3D6484AB2A68AF8500D03399 /* MarkdownView in Frameworks */,
 				3D1E494D29E81C4C0030E368 /* MarkdownUI in Frameworks */,
 				3DA6841F2A599F1D00E972AC /* SwiftSoup in Frameworks */,
 			);
@@ -74,6 +80,14 @@
 				3DA684202A5AE22200E972AC /* V2exService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		3DA758132A681D5800CCE641 /* Html */ = {
+			isa = PBXGroup;
+			children = (
+				3DA758142A681E3000CCE641 /* Html.swift */,
+			);
+			path = Html;
 			sourceTree = "<group>";
 		};
 		3DBD2C2129E4235800EDC1EE = {
@@ -95,6 +109,7 @@
 		3DBD2C2C29E4235800EDC1EE /* V2EX */ = {
 			isa = PBXGroup;
 			children = (
+				3DA758132A681D5800CCE641 /* Html */,
 				3D1E494829E808630030E368 /* Service */,
 				3DBD2C4729E425FC00EDC1EE /* Model */,
 				3DBD2C3B29E4236800EDC1EE /* View */,
@@ -143,6 +158,7 @@
 				3DBD2C4E29E4292600EDC1EE /* TopicInfoView.swift */,
 				3DBD2C5229E4630000EDC1EE /* TopicReplyView.swift */,
 				3D894EF62A586724009D6240 /* TopicSkeleton.swift */,
+				3D4B39022A63F497007EA44A /* WebView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -178,6 +194,7 @@
 				3D894EF12A58591E009D6240 /* SkeletonView */,
 				3D894EF42A585CAC009D6240 /* SkeletonUI */,
 				3DA6841E2A599F1D00E972AC /* SwiftSoup */,
+				3D6484AA2A68AF8500D03399 /* MarkdownView */,
 			);
 			productName = V2EX;
 			productReference = 3DBD2C2A29E4235800EDC1EE /* V2EX.app */;
@@ -214,6 +231,7 @@
 				3D894EF02A58591E009D6240 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				3D894EF32A585CAC009D6240 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				3DA6841D2A599F1D00E972AC /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				3D6484A92A68AF8500D03399 /* XCRemoteSwiftPackageReference "MarkdownView" */,
 			);
 			productRefGroup = 3DBD2C2B29E4235800EDC1EE /* Products */;
 			projectDirPath = "";
@@ -247,9 +265,11 @@
 				3DBD2C4229E424A200EDC1EE /* MyView.swift in Sources */,
 				3DBD2C4029E4247200EDC1EE /* HomeView.swift in Sources */,
 				3DBD2C5329E4630000EDC1EE /* TopicReplyView.swift in Sources */,
+				3D4B39032A63F497007EA44A /* WebView.swift in Sources */,
 				3DBD2C4929E4262800EDC1EE /* MockModel.swift in Sources */,
 				3DBD2C5129E4303800EDC1EE /* TopicDetailView.swift in Sources */,
 				3DBD2C3029E4235800EDC1EE /* ContentView.swift in Sources */,
+				3DA758152A681E3000CCE641 /* Html.swift in Sources */,
 				3DBD2C2E29E4235800EDC1EE /* V2EXApp.swift in Sources */,
 				3DBD2C4D29E426EF00EDC1EE /* TopicUserView.swift in Sources */,
 				3DA684212A5AE22200E972AC /* V2exService.swift in Sources */,
@@ -481,6 +501,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		3D6484A92A68AF8500D03399 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/keitaoouchi/MarkdownView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		3D894EF02A58591E009D6240 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
@@ -522,6 +550,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		3D6484AA2A68AF8500D03399 /* MarkdownView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D6484A92A68AF8500D03399 /* XCRemoteSwiftPackageReference "MarkdownView" */;
+			productName = MarkdownView;
 		};
 		3D894EF12A58591E009D6240 /* SkeletonView */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -14,7 +14,7 @@ import V2exAPI
 
 struct PreviewData {
     static let topic = Topic(
-        id: 955532,
+        id: 957317,
         title: "♥ Introducing Project Babel 2.0",
         replies: 5,
         node_name: "Project Babel",
@@ -90,7 +90,7 @@ struct Tab: Identifiable {
 
 class TabList: ObservableObject {
     @Published var tabs = [
-        Tab(key: "HOT", value: "最热", topic: [], lastRequestTime: 0),
+        Tab(key: "hot", value: "最热", topic: [], lastRequestTime: 0),
         Tab(key: "tech", value: "技术", topic: [], lastRequestTime: 0),
         Tab(key: "creative", value: "创意", topic: [], lastRequestTime: 0),
         Tab(key: "play", value: "好玩", topic: [], lastRequestTime: 0),
@@ -99,7 +99,6 @@ class TabList: ObservableObject {
         Tab(key: "deals", value: "交易", topic: [], lastRequestTime: 0),
         Tab(key: "city", value: "城市", topic: [], lastRequestTime: 0),
         Tab(key: "qna", value: "问与答", topic: [], lastRequestTime: 0),
-        Tab(key: "hot", value: "最热", topic: [], lastRequestTime: 0),
         Tab(key: "all", value: "全部", topic: [], lastRequestTime: 0),
         Tab(key: "r2", value: "R2", topic: [], lastRequestTime: 0),
     ]

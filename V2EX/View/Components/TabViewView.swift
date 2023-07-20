@@ -134,11 +134,7 @@ struct TabViewView: View {
         if refresh! || lastRequestTime == 0 || isDifferenceFifteenMinutes(timestamp: TimeInterval(lastRequestTime), gap: 10) {
             print("加载中...")
             var topics: [Topic]?
-            if tab == "HOT" {
-                topics = await api.getHotTopics()!
-            } else {
-                topics = await api.getTabTopics(tab: tab)
-            }
+            topics = await api.getTabTopics(tab: tab)
             self.data.tabs[index].topic = topics ?? []
             self.data.tabs[index].lastRequestTime = Int(Date().timeIntervalSince1970)
         }

@@ -8,30 +8,10 @@
 import Foundation
 import V2exAPI
 import SwiftSoup
+import WebKit
 
+var v2ex = V2exAPI()
 
-
-extension Date {
-    func fromNow() -> String {
-        // ask for the full relative date
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .full
-        formatter.locale = Locale(identifier: Locale.preferredLanguages.first!)
-        
-        // get exampleDate relative to the current date
-        let relativeDate = formatter.localizedString(for: self, relativeTo: Date.now)
-        
-        return relativeDate
-    }
-}
-
-//字符串转Date
-func getDateFromTime(time:String) -> Date{
-    let dateformatter = DateFormatter()
-    //自定义日期格式
-    dateformatter.dateFormat="yyyy-MM-dd HH:mm:ss Z"
-    return dateformatter.date(from: time)!
-}
 //当前时间与时间戳的差值是否大于 gap 分钟
 func isDifferenceFifteenMinutes(timestamp: TimeInterval, gap: Int) -> Bool {
     let currentDate = Date()
@@ -54,6 +34,11 @@ func extractNumber(from string: String) -> String? {
         print("Error: \(error)")
     }
     return nil
+}
+
+
+func runInMain(delay: Int = 0, execute work: @escaping @convention(block) () -> Void) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(delay), execute: work)
 }
 
 /// V2exService
@@ -85,7 +70,7 @@ public struct V2exService {
                     node_value: item.node!.name,
                     author: item.member!.username!,
                     avatar: item.member!.avatarLarge!,
-                    last_reply_time: Date(timeIntervalSince1970: TimeInterval(item.lastModified!)).fromNow()
+                    last_reply_time: ""
                 )
                 result.append(obj)
             }
@@ -122,7 +107,7 @@ public struct V2exService {
                 node_value = node_value.split(separator: "/").map(String.init)[1]
                 let author = try el.select(".topic_info strong").first()!.children().text()
                 let avatar = try el.select(".avatar").attr("src")
-                let last_reply_time = try el.select(".topic_info span").attr("title")
+                let last_reply_time = try el.select(".topic_info span").text()
                 
                 let obj: Topic = Topic(
                     id: (id as NSString).integerValue,
@@ -132,7 +117,7 @@ public struct V2exService {
                     node_value: node_value,
                     author: author,
                     avatar: avatar,
-                    last_reply_time: getDateFromTime(time: last_reply_time).fromNow()
+                    last_reply_time: last_reply_time
                 )
                 result.append(obj)
             }
@@ -149,7 +134,7 @@ public struct V2exService {
      */
     func getTopicDetail(id: Int, p: Int) async -> Comment? {
         do {
-            let url = URL(string: prefix + "/t/\(id)?p=\(p)")!
+            let url = URL(string: prefix + "/t/\(957317)?p=\(p)")!
             
             let (data, _) = try await session.data(from: url)
             
@@ -159,8 +144,8 @@ public struct V2exService {
             var master = ""
             var content = ""
             var publish_time = ""
-            var page = 0
-            page = try boxs.get(1).select(".cell .page_input").first()!.parent()!.select("a").count
+            var page = 1
+//            page = try boxs.get(1).select(".cell .page_input").first()!.parent()!.select("a").count
             
             var subtle_list = [Subtle]()
             
@@ -169,17 +154,17 @@ public struct V2exService {
             if p == 1 {
                 master = try boxs.get(0).select(".header .gray a").first()!.text()
                 content = try boxs.get(0).select(".cell .topic_content").html()
-                publish_time = try boxs.get(0).select(".header .gray span").attr("title")
-                publish_time = getDateFromTime(time: publish_time).fromNow()
+                publish_time = try boxs.get(0).select(".header .gray span").text()
                 
                 // 附言
                 let subtles: Elements = try boxs.get(0).select(".subtle")
                 
                 for subtle in subtles {
 
-                    var subtle_time = try subtle.select(".fade span").attr("title")
-                    let subtle_content = try subtle.select(".topic_content").html()
-                    subtle_time = getDateFromTime(time: subtle_time).fromNow()
+                    let subtle_time = try subtle.select(".fade span").text()
+                    var subtle_content = try subtle.select(".topic_content").html()
+                    subtle_content = getHtmlStr(content: subtle_content)
+                    
                     subtle_list.append(Subtle(
                         subtle_time: subtle_time,
                         subtle_content: subtle_content
@@ -193,12 +178,12 @@ public struct V2exService {
                 let author = try reply.select(".dark").text()
                 let avatar = try reply.select(".avatar").attr("src")
                 let is_master = master == author
-                var reply_time = try reply.select(".ago").attr("title")
+                let reply_time = try reply.select(".ago").text()
                 let like_num = try reply.select(".fade").text()
-                let content = try reply.select(".reply_content").html()
+                var content = try reply.select(".reply_content").html()
+                content = getHtmlStr(content: content)
                 
                 if !author.isEmpty {
-                    reply_time = getDateFromTime(time: reply_time).fromNow()
                     let obj: Reply = Reply(
                         author: author,
                         avatar: avatar,
@@ -210,6 +195,8 @@ public struct V2exService {
                     reply_list.append(obj)
                 }
             }
+            
+            content = getHtmlStr(content: content)
             
             return Comment(
                 page: page,
