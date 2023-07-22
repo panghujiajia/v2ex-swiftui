@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import V2exAPI
 import Kingfisher
 
 struct TopicUserView: View {

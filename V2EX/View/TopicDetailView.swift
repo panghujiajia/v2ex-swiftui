@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import MarkdownUI
-import V2exAPI
+import RichText
 
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
@@ -45,13 +44,6 @@ struct TopicDetailView: View {
                             .padding(.top, 6)
                         if comment != nil {
                             TopicContentHtmlView(html: comment!.content)
-                        } else {
-                            Text("")
-                                .skeleton(with: true)
-                                .shape(type: .rectangle)
-                                .multiline(lines: 5, scales: [1: 0.6])
-                                .animation(type: .pulse())
-                                .frame(height: 100)
                         }
                     }
                     .padding(.horizontal)
@@ -70,12 +62,23 @@ struct TopicDetailView: View {
                                     .multilineTextAlignment(.leading)
                                     .frame(maxWidth: .infinity, alignment: .topLeading)
                                     .padding(.bottom, 10)
-                                TopicSubtleHtmlView(html: subtle.subtle_content, index: index)
-                                    .font(.body)
-                                    .fontWeight(.regular)
-                                    .foregroundColor(Color("666666"))
-                                    .multilineTextAlignment(.leading)
-                                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                                RichText(html: subtle.subtle_content)
+                                    .lineHeight(170)
+                                    .colorScheme(.auto)
+                                    .imageRadius(12)
+                                    .fontType(.system)
+                                    .foregroundColor(light: Color.primary, dark: Color.primary)
+                                    .linkColor(light: Color.blue, dark: Color.blue)
+                                    .colorPreference(forceColor: .onlyLinks)
+                                    .linkOpenType(.SFSafariView())
+                                    .placeholder {
+                                        Text("")
+                                            .skeleton(with: true)
+                                            .shape(type: .rectangle)
+                                            .multiline(lines: 5, scales: [1: 0.6])
+                                            .animation(type: .pulse())
+                                            .frame(height: 100)
+                                    }
                                 if (index + 1) < comment!.subtle_list!.count {
                                     Divider()
                                         .opacity(0.4)
@@ -97,7 +100,7 @@ struct TopicDetailView: View {
                         .frame(width: UIScreen.main.bounds.width, height: 10)
                     
                     if comment != nil && comment!.reply_list != nil {
-                        VStack(spacing: 0){
+                        LazyVStack(spacing: 0){
                             ForEach(Array(comment!.reply_list!.enumerated()), id: \.offset) { index, reply in
                                 VStack(alignment: .leading){
                                     HStack(alignment: .top) {
@@ -107,7 +110,15 @@ struct TopicDetailView: View {
                                             .font(.footnote)
                                             .foregroundColor(Color("999999"))
                                     }
-                                    TopicReplyHtmlView(html: reply.content, index: index)
+                                    RichText(html: reply.content)
+                                        .lineHeight(170)
+                                        .colorScheme(.auto)
+                                        .imageRadius(12)
+                                        .fontType(.system)
+                                        .foregroundColor(light: Color.primary, dark: Color.primary)
+                                        .linkColor(light: Color.blue, dark: Color.blue)
+                                        .colorPreference(forceColor: .onlyLinks)
+                                        .linkOpenType(.SFSafariView())
                                         .font(.body)
                                         .fontWeight(.regular)
                                         .foregroundColor(Color("333333"))
@@ -115,15 +126,7 @@ struct TopicDetailView: View {
                                         .frame(maxWidth: .infinity, alignment: .topLeading)
                                         .padding(.top, 6)
                                         .padding(.leading, 40)
-                                    
-//                                    Markdown(reply.content)
-//                                        .font(.body)
-//                                        .fontWeight(.regular)
-//                                        .foregroundColor(Color("333333"))
-//                                        .multilineTextAlignment(.leading)
-//                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-//                                        .padding(.top, 6)
-//                                        .padding(.leading, 40)
+                                        .id(index)
                                 }
                                 .padding()
                                 Divider()
@@ -186,19 +189,22 @@ struct TopicDetailView: View {
     
     
     func loadData() async {
-        let result: Comment = await api.getTopicDetail(id: topic.id, p: self.page)!
-        // 初次加载
-        if self.page == 1 {
-            comment = result
-        } else {
-            var reply_list = comment!.reply_list
-            reply_list! += result.reply_list!
-            comment!.reply_list = reply_list
-        }
-        // 有分页
-        if comment!.page != self.page {
-            self.page += 1
-            await loadData()
+        let result: Comment? = await api.getTopicDetail(id: topic.id, p: self.page)
+        
+        if result != nil {
+            // 初次加载
+            if self.page == 1 {
+                comment = result
+            } else {
+                var reply_list = comment!.reply_list
+                reply_list! += result!.reply_list!
+                comment!.reply_list = reply_list
+            }
+            // 有分页
+            if comment!.page != self.page {
+                self.page += 1
+                await loadData()
+            }
         }
     }
 }

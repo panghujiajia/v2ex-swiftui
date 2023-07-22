@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftSoup
-import V2exAPI
 
 struct TabViewView: View {
     @State var selectedIndex = 0

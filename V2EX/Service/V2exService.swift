@@ -1,16 +1,13 @@
 //
-//  V2exAPI.swift
+//  V2exService.swift
 //  V2EX
 //
 //  Created by pumbaa on 2023/7/9.
 //
 
 import Foundation
-import V2exAPI
 import SwiftSoup
-import WebKit
-
-var v2ex = V2exAPI()
+import V2exAPI
 
 //当前时间与时间戳的差值是否大于 gap 分钟
 func isDifferenceFifteenMinutes(timestamp: TimeInterval, gap: Int) -> Bool {
@@ -34,11 +31,6 @@ func extractNumber(from string: String) -> String? {
         print("Error: \(error)")
     }
     return nil
-}
-
-
-func runInMain(delay: Int = 0, execute work: @escaping @convention(block) () -> Void) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + .microseconds(delay), execute: work)
 }
 
 /// V2exService
@@ -145,7 +137,12 @@ public struct V2exService {
             var content = ""
             var publish_time = ""
             var page = 1
-            page = try boxs.get(1).select(".cell .page_input").first()?.parent()?.select("a").count ?? 1
+            
+            if boxs.count > 1 {
+                page = try boxs.get(1).select(".cell .page_input").first()?.parent()?.select("a").count ?? 1
+            } else {
+                return nil
+            }
             
             var subtle_list = [Subtle]()
             

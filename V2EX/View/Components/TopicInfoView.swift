@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import V2exAPI
 
 struct TopicInfoView: View {
     let topic: Topic

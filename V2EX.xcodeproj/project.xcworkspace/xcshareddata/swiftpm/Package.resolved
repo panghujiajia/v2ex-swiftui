@@ -10,12 +10,12 @@
       }
     },
     {
-      "identity" : "markdownview",
+      "identity" : "richtext",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/keitaoouchi/MarkdownView.git",
+      "location" : "https://github.com/NuPlay/RichText.git",
       "state" : {
-        "revision" : "5e62a27f1002cd63c350ef1a4c640ddcd1f1ed48",
-        "version" : "1.9.1"
+        "revision" : "ff468d18b066ea5838a2d3f9cb572d55b8ebdb11",
+        "version" : "2.3.0"
       }
     },
     {
@@ -25,24 +25,6 @@
       "state" : {
         "revision" : "e3cf87cb96a10562bc660c9d48418a395d8385ed",
         "version" : "1.0.11"
-      }
-    },
-    {
-      "identity" : "skeletonview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Juanpe/SkeletonView.git",
-      "state" : {
-        "revision" : "739a4f5d78731bebc48811c75fa9e1f4c4cef23e",
-        "version" : "1.30.4"
-      }
-    },
-    {
-      "identity" : "swift-markdown-ui",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
-      "state" : {
-        "revision" : "12b351a75201a8124c2f2e1f9fc6ef5cd812c0b9",
-        "version" : "2.1.0"
       }
     },
     {

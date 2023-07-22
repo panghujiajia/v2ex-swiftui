@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D1E494D29E81C4C0030E368 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E494C29E81C4C0030E368 /* MarkdownUI */; };
-		3D1E495029E81C5D0030E368 /* V2exAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E494F29E81C5D0030E368 /* V2exAPI */; };
 		3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E495229E82C3C0030E368 /* Kingfisher */; };
-		3D4B39032A63F497007EA44A /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4B39022A63F497007EA44A /* WebView.swift */; };
-		3D6484AB2A68AF8500D03399 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D6484AA2A68AF8500D03399 /* MarkdownView */; };
-		3D894EF22A58591E009D6240 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D894EF12A58591E009D6240 /* SkeletonView */; };
+		3D4B39032A63F497007EA44A /* TopicContentHtmlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4B39022A63F497007EA44A /* TopicContentHtmlView.swift */; };
+		3D7E0E3C2A6C3614008FC318 /* RichText in Frameworks */ = {isa = PBXBuildFile; productRef = 3D7E0E3B2A6C3614008FC318 /* RichText */; };
+		3D7E0E422A6C52CD008FC318 /* V2exAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D7E0E412A6C52CD008FC318 /* V2exAPI */; };
 		3D894EF52A585CAC009D6240 /* SkeletonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D894EF42A585CAC009D6240 /* SkeletonUI */; };
 		3D894EF72A586724009D6240 /* TopicSkeleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D894EF62A586724009D6240 /* TopicSkeleton.swift */; };
 		3DA6841F2A599F1D00E972AC /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 3DA6841E2A599F1D00E972AC /* SwiftSoup */; };
@@ -35,7 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D4B39022A63F497007EA44A /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		3D4B39022A63F497007EA44A /* TopicContentHtmlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicContentHtmlView.swift; sourceTree = "<group>"; };
 		3D894EF62A586724009D6240 /* TopicSkeleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopicSkeleton.swift; sourceTree = "<group>"; };
 		3DA684202A5AE22200E972AC /* V2exService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = V2exService.swift; sourceTree = "<group>"; };
 		3DA758142A681E3000CCE641 /* Html.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Html.swift; sourceTree = "<group>"; };
@@ -62,11 +60,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D894EF52A585CAC009D6240 /* SkeletonUI in Frameworks */,
-				3D894EF22A58591E009D6240 /* SkeletonView in Frameworks */,
 				3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */,
-				3D1E495029E81C5D0030E368 /* V2exAPI in Frameworks */,
-				3D6484AB2A68AF8500D03399 /* MarkdownView in Frameworks */,
-				3D1E494D29E81C4C0030E368 /* MarkdownUI in Frameworks */,
+				3D7E0E422A6C52CD008FC318 /* V2exAPI in Frameworks */,
+				3D7E0E3C2A6C3614008FC318 /* RichText in Frameworks */,
 				3DA6841F2A599F1D00E972AC /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,7 +154,7 @@
 				3DBD2C4E29E4292600EDC1EE /* TopicInfoView.swift */,
 				3DBD2C5229E4630000EDC1EE /* TopicReplyView.swift */,
 				3D894EF62A586724009D6240 /* TopicSkeleton.swift */,
-				3D4B39022A63F497007EA44A /* WebView.swift */,
+				3D4B39022A63F497007EA44A /* TopicContentHtmlView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -188,13 +184,11 @@
 			);
 			name = V2EX;
 			packageProductDependencies = (
-				3D1E494C29E81C4C0030E368 /* MarkdownUI */,
-				3D1E494F29E81C5D0030E368 /* V2exAPI */,
 				3D1E495229E82C3C0030E368 /* Kingfisher */,
-				3D894EF12A58591E009D6240 /* SkeletonView */,
 				3D894EF42A585CAC009D6240 /* SkeletonUI */,
 				3DA6841E2A599F1D00E972AC /* SwiftSoup */,
-				3D6484AA2A68AF8500D03399 /* MarkdownView */,
+				3D7E0E3B2A6C3614008FC318 /* RichText */,
+				3D7E0E412A6C52CD008FC318 /* V2exAPI */,
 			);
 			productName = V2EX;
 			productReference = 3DBD2C2A29E4235800EDC1EE /* V2EX.app */;
@@ -225,13 +219,11 @@
 			);
 			mainGroup = 3DBD2C2129E4235800EDC1EE;
 			packageReferences = (
-				3D1E494B29E81C4C0030E368 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
-				3D1E494E29E81C5D0030E368 /* XCRemoteSwiftPackageReference "V2exAPI" */,
 				3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				3D894EF02A58591E009D6240 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				3D894EF32A585CAC009D6240 /* XCRemoteSwiftPackageReference "SkeletonUI" */,
 				3DA6841D2A599F1D00E972AC /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				3D6484A92A68AF8500D03399 /* XCRemoteSwiftPackageReference "MarkdownView" */,
+				3D7E0E3A2A6C3614008FC318 /* XCRemoteSwiftPackageReference "RichText" */,
+				3D7E0E402A6C52CD008FC318 /* XCRemoteSwiftPackageReference "V2exAPI" */,
 			);
 			productRefGroup = 3DBD2C2B29E4235800EDC1EE /* Products */;
 			projectDirPath = "";
@@ -265,7 +257,7 @@
 				3DBD2C4229E424A200EDC1EE /* MyView.swift in Sources */,
 				3DBD2C4029E4247200EDC1EE /* HomeView.swift in Sources */,
 				3DBD2C5329E4630000EDC1EE /* TopicReplyView.swift in Sources */,
-				3D4B39032A63F497007EA44A /* WebView.swift in Sources */,
+				3D4B39032A63F497007EA44A /* TopicContentHtmlView.swift in Sources */,
 				3DBD2C4929E4262800EDC1EE /* MockModel.swift in Sources */,
 				3DBD2C5129E4303800EDC1EE /* TopicDetailView.swift in Sources */,
 				3DBD2C3029E4235800EDC1EE /* ContentView.swift in Sources */,
@@ -477,22 +469,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3D1E494B29E81C4C0030E368 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-		3D1E494E29E81C5D0030E368 /* XCRemoteSwiftPackageReference "V2exAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/isaced/V2exAPI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -501,17 +477,17 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		3D6484A92A68AF8500D03399 /* XCRemoteSwiftPackageReference "MarkdownView" */ = {
+		3D7E0E3A2A6C3614008FC318 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/keitaoouchi/MarkdownView.git";
+			repositoryURL = "https://github.com/NuPlay/RichText.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 2.0.0;
 			};
 		};
-		3D894EF02A58591E009D6240 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+		3D7E0E402A6C52CD008FC318 /* XCRemoteSwiftPackageReference "V2exAPI" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			repositoryURL = "https://github.com/isaced/V2exAPI.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
@@ -536,30 +512,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3D1E494C29E81C4C0030E368 /* MarkdownUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D1E494B29E81C4C0030E368 /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
-			productName = MarkdownUI;
-		};
-		3D1E494F29E81C5D0030E368 /* V2exAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D1E494E29E81C5D0030E368 /* XCRemoteSwiftPackageReference "V2exAPI" */;
-			productName = V2exAPI;
-		};
 		3D1E495229E82C3C0030E368 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		3D6484AA2A68AF8500D03399 /* MarkdownView */ = {
+		3D7E0E3B2A6C3614008FC318 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3D6484A92A68AF8500D03399 /* XCRemoteSwiftPackageReference "MarkdownView" */;
-			productName = MarkdownView;
+			package = 3D7E0E3A2A6C3614008FC318 /* XCRemoteSwiftPackageReference "RichText" */;
+			productName = RichText;
 		};
-		3D894EF12A58591E009D6240 /* SkeletonView */ = {
+		3D7E0E412A6C52CD008FC318 /* V2exAPI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3D894EF02A58591E009D6240 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
+			package = 3D7E0E402A6C52CD008FC318 /* XCRemoteSwiftPackageReference "V2exAPI" */;
+			productName = V2exAPI;
 		};
 		3D894EF42A585CAC009D6240 /* SkeletonUI */ = {
 			isa = XCSwiftPackageProductDependency;
