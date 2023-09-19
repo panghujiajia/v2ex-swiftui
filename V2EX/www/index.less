@@ -1,0 +1,58 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Helvetica Neue', 'Luxi Sans', 'Segoe UI', 'Hiragino Sans GB',
+		'Microsoft Yahei', sans-serif, 'Apple Logo';
+	word-break: break-all;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
+.embedded_image {
+	max-width: 100%;
+	image-orientation: from-image;
+	vertical-align: bottom;
+}
+a {
+	color: #778087;
+}
+.topic_content {
+	padding-bottom: 14px;
+	&:last-child {
+		padding-bottom: 0;
+	}
+}
+.markdown_body {
+	font-size: 14px;
+	line-height: 1.6;
+	color: #000;
+	word-break: break-word;
+	& > :first-child {
+		margin-top: 0 !important;
+	}
+	& > :last-child {
+		margin-bottom: 0 !important;
+	}
+	p {
+		margin: 14px 0;
+		color: #000;
+	}
+	img {
+		max-width: 100%;
+	}
+}
+.subtle {
+	font-size: 14px;
+	line-height: 1.6;
+	border-top: 1px solid #e2e2e2;
+	padding: 14px 0;
+	&:last-child {
+		padding-bottom: 0;
+	}
+	.fade {
+		color: #999;
+		display: block;
+		margin-bottom: 10px;
+	}
+}

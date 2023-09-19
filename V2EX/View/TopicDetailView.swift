@@ -28,6 +28,8 @@ struct TopicDetailView: View {
     
     @State private var page = 1
     
+    @State private var webViewHeight: CGFloat = 0
+
     var body: some View {
         VStack(spacing: 0){
             ScrollView(.vertical, showsIndicators: false){
@@ -43,53 +45,62 @@ struct TopicDetailView: View {
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .padding(.top, 6)
                         if comment != nil {
-                            TopicContentHtmlView(html: comment!.content)
+                            HTMLView(htmlString: comment!.content, webViewHeight: $webViewHeight)
+                                .frame(height: webViewHeight)
+                            if webViewHeight == 0 {
+                                Text("")
+                                    .skeleton(with: true)
+                                    .shape(type: .rectangle)
+                                    .multiline(lines: 5, scales: [1: 0.6])
+                                    .animation(type: .pulse())
+                                    .frame(height: 100)
+                            }
                         }
                     }
                     .padding(.horizontal)
                     .padding(.bottom)
                     
                     
-                    if comment != nil && !comment!.subtle_list!.isEmpty {
-                        Divider()
-                            .opacity(0.4)
-                        VStack(spacing: 0){
-                            ForEach(Array(comment!.subtle_list!.enumerated()), id: \.offset) { index, subtle in
-                                Text("第 \(index + 1) 条附言 · \(subtle.subtle_time)")
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(Color("333333"))
-                                    .multilineTextAlignment(.leading)
-                                    .frame(maxWidth: .infinity, alignment: .topLeading)
-                                    .padding(.bottom, 10)
-                                RichText(html: subtle.subtle_content)
-                                    .lineHeight(170)
-                                    .colorScheme(.auto)
-                                    .imageRadius(12)
-                                    .fontType(.system)
-                                    .foregroundColor(light: Color.primary, dark: Color.primary)
-                                    .linkColor(light: Color.blue, dark: Color.blue)
-                                    .colorPreference(forceColor: .onlyLinks)
-                                    .linkOpenType(.SFSafariView())
-                                    .placeholder {
-                                        Text("")
-                                            .skeleton(with: true)
-                                            .shape(type: .rectangle)
-                                            .multiline(lines: 5, scales: [1: 0.6])
-                                            .animation(type: .pulse())
-                                            .frame(height: 100)
-                                    }
-                                if (index + 1) < comment!.subtle_list!.count {
-                                    Divider()
-                                        .opacity(0.4)
-                                        .padding(.vertical)
-                                }
-                            }
-                        }
-                        .padding()
-                        .background(Color("F6F6F6"))
-                        .padding(.bottom)
-                    }
+//                    if comment != nil && !comment!.subtle_list!.isEmpty {
+//                        Divider()
+//                            .opacity(0.4)
+//                        VStack(spacing: 0){
+//                            ForEach(Array(comment!.subtle_list!.enumerated()), id: \.offset) { index, subtle in
+//                                Text("第 \(index + 1) 条附言 · \(subtle.subtle_time)")
+//                                    .font(.subheadline)
+//                                    .fontWeight(.medium)
+//                                    .foregroundColor(Color("333333"))
+//                                    .multilineTextAlignment(.leading)
+//                                    .frame(maxWidth: .infinity, alignment: .topLeading)
+//                                    .padding(.bottom, 10)
+//                                RichText(html: subtle.subtle_content)
+//                                    .lineHeight(170)
+//                                    .colorScheme(.auto)
+//                                    .imageRadius(12)
+//                                    .fontType(.system)
+//                                    .foregroundColor(light: Color.primary, dark: Color.primary)
+//                                    .linkColor(light: Color.blue, dark: Color.blue)
+//                                    .colorPreference(forceColor: .onlyLinks)
+//                                    .linkOpenType(.SFSafariView())
+//                                    .placeholder {
+//                                        Text("")
+//                                            .skeleton(with: true)
+//                                            .shape(type: .rectangle)
+//                                            .multiline(lines: 5, scales: [1: 0.6])
+//                                            .animation(type: .pulse())
+//                                            .frame(height: 100)
+//                                    }
+//                                if (index + 1) < comment!.subtle_list!.count {
+//                                    Divider()
+//                                        .opacity(0.4)
+//                                        .padding(.vertical)
+//                                }
+//                            }
+//                        }
+//                        .padding()
+//                        .background(Color("F6F6F6"))
+//                        .padding(.bottom)
+//                    }
                     
                     TopicInfoView(topic: topic)
                         .padding(.horizontal)

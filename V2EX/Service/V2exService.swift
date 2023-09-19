@@ -150,7 +150,7 @@ public struct V2exService {
             
             if p == 1 {
                 master = try boxs.get(0).select(".header .gray a").first()!.text()
-                content = try boxs.get(0).select(".cell .topic_content").html()
+                content = try boxs.get(0).select(".cell .topic_content").outerHtml()
                 publish_time = try boxs.get(0).select(".header .gray span").text()
                 
                 // 附言
@@ -158,14 +158,15 @@ public struct V2exService {
                 
                 for subtle in subtles {
 
-                    let subtle_time = try subtle.select(".fade span").text()
-                    var subtle_content = try subtle.select(".topic_content").html()
-                    subtle_content = getHtmlStr(content: subtle_content)
-                    
-                    subtle_list.append(Subtle(
-                        subtle_time: subtle_time,
-                        subtle_content: subtle_content
-                    ))
+//                    let subtle_time = try subtle.select(".fade span").text()
+//                    let subtle_content = try subtle.select(".topic_content").html()
+                    let subtleContent = try subtle.outerHtml()
+//                    subtle_list.append(Subtle(
+//                        subtle_time: subtle_time,
+//                        subtle_content: subtle_content
+//                    ))
+                    // 附言和主体内容用同一个webview渲染
+                    content = content + subtleContent
                 }
             }
             
@@ -176,8 +177,7 @@ public struct V2exService {
                 let is_master = master == author
                 let reply_time = try reply.select(".ago").text()
                 let like_num = try reply.select(".fade").text()
-                var content = try reply.select(".reply_content").html()
-                content = getHtmlStr(content: content)
+                let content = try reply.select(".reply_content").html()
                 
                 if !author.isEmpty {
                     let obj: Reply = Reply(
@@ -191,8 +191,6 @@ public struct V2exService {
                     reply_list.append(obj)
                 }
             }
-            
-            content = getHtmlStr(content: content)
             
             return Comment(
                 page: page,
