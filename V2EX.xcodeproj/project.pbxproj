@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3D1E495229E82C3C0030E368 /* Kingfisher */; };
+		3D2DD3752ABDDEA80048DFDC /* NewHtmlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2DD3742ABDDEA80048DFDC /* NewHtmlView.swift */; };
+		3D418A1A2AB9C8D900F6681D /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3D418A192AB9C8D900F6681D /* MarkdownUI */; };
 		3D422F942AB97DA400380210 /* highlight.default.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 3D422F922AB97DA400380210 /* highlight.default.min.css */; };
 		3D422F952AB97DA400380210 /* highlight.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 3D422F932AB97DA400380210 /* highlight.min.js */; };
 		3D422F972AB97EE400380210 /* highlight.dark.min.css in Resources */ = {isa = PBXBuildFile; fileRef = 3D422F962AB97EE400380210 /* highlight.dark.min.css */; };
@@ -43,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D2DD3742ABDDEA80048DFDC /* NewHtmlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHtmlView.swift; sourceTree = "<group>"; };
 		3D422F922AB97DA400380210 /* highlight.default.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = highlight.default.min.css; path = ../../../highlight.default.min.css; sourceTree = "<group>"; };
 		3D422F932AB97DA400380210 /* highlight.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = highlight.min.js; path = ../../../highlight.min.js; sourceTree = "<group>"; };
 		3D422F962AB97EE400380210 /* highlight.dark.min.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = highlight.dark.min.css; path = ../../../highlight.dark.min.css; sourceTree = "<group>"; };
@@ -82,6 +85,7 @@
 				3D894EF52A585CAC009D6240 /* SkeletonUI in Frameworks */,
 				3D1E495329E82C3C0030E368 /* Kingfisher in Frameworks */,
 				3D7E0E422A6C52CD008FC318 /* V2exAPI in Frameworks */,
+				3D418A1A2AB9C8D900F6681D /* MarkdownUI in Frameworks */,
 				3D7E0E3C2A6C3614008FC318 /* RichText in Frameworks */,
 				3DA6841F2A599F1D00E972AC /* SwiftSoup in Frameworks */,
 			);
@@ -185,6 +189,7 @@
 				3D894EF62A586724009D6240 /* TopicSkeleton.swift */,
 				3D4B39022A63F497007EA44A /* TopicContentHtmlView.swift */,
 				3D4E14342AB254AB007F24AD /* TextView.swift */,
+				3D2DD3742ABDDEA80048DFDC /* NewHtmlView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 				3DA6841E2A599F1D00E972AC /* SwiftSoup */,
 				3D7E0E3B2A6C3614008FC318 /* RichText */,
 				3D7E0E412A6C52CD008FC318 /* V2exAPI */,
+				3D418A192AB9C8D900F6681D /* MarkdownUI */,
 			);
 			productName = V2EX;
 			productReference = 3DBD2C2A29E4235800EDC1EE /* V2EX.app */;
@@ -254,6 +260,7 @@
 				3DA6841D2A599F1D00E972AC /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				3D7E0E3A2A6C3614008FC318 /* XCRemoteSwiftPackageReference "RichText" */,
 				3D7E0E402A6C52CD008FC318 /* XCRemoteSwiftPackageReference "V2exAPI" */,
+				3D418A182AB9C8D900F6681D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */,
 			);
 			productRefGroup = 3DBD2C2B29E4235800EDC1EE /* Products */;
 			projectDirPath = "";
@@ -292,6 +299,7 @@
 			files = (
 				3DBD2C4B29E426C100EDC1EE /* TopicItemView.swift in Sources */,
 				3DBD2C4429E424B600EDC1EE /* TabViewView.swift in Sources */,
+				3D2DD3752ABDDEA80048DFDC /* NewHtmlView.swift in Sources */,
 				3DBD2C4F29E4292600EDC1EE /* TopicInfoView.swift in Sources */,
 				3DBD2C4229E424A200EDC1EE /* MyView.swift in Sources */,
 				3DBD2C4029E4247200EDC1EE /* HomeView.swift in Sources */,
@@ -517,6 +525,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		3D418A182AB9C8D900F6681D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/swift-markdown-ui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		3D7E0E3A2A6C3614008FC318 /* XCRemoteSwiftPackageReference "RichText" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NuPlay/RichText.git";
@@ -556,6 +572,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3D1E495129E82C3C0030E368 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		3D418A192AB9C8D900F6681D /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D418A182AB9C8D900F6681D /* XCRemoteSwiftPackageReference "swift-markdown-ui" */;
+			productName = MarkdownUI;
 		};
 		3D7E0E3B2A6C3614008FC318 /* RichText */ = {
 			isa = XCSwiftPackageProductDependency;

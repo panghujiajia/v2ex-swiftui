@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "networkimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/NetworkImage",
+      "state" : {
+        "revision" : "7aff8d1b31148d32c5933d75557d42f6323ee3d1",
+        "version" : "6.0.0"
+      }
+    },
+    {
       "identity" : "richtext",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NuPlay/RichText.git",
@@ -25,6 +34,15 @@
       "state" : {
         "revision" : "e3cf87cb96a10562bc660c9d48418a395d8385ed",
         "version" : "1.0.11"
+      }
+    },
+    {
+      "identity" : "swift-markdown-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gonzalezreal/swift-markdown-ui",
+      "state" : {
+        "revision" : "5df8a4adedd6ae4eb2455ef60ff75183984daeb8",
+        "version" : "2.2.0"
       }
     },
     {

@@ -7,6 +7,8 @@
 
 import SwiftUI
 import RichText
+import MarkdownUI
+import SwiftSoup
 
 extension UINavigationController: UIGestureRecognizerDelegate {
     override open func viewDidLoad() {
@@ -44,7 +46,7 @@ struct TopicDetailView: View {
                             .multilineTextAlignment(.leading)
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .padding(.top, 6)
-                        if comment != nil {
+                        if comment != nil && !comment!.content.isEmpty {
                             HTMLView(htmlString: comment!.content, webViewHeight: $webViewHeight)
                                 .frame(height: webViewHeight)
                             if webViewHeight == 0 {
@@ -60,48 +62,6 @@ struct TopicDetailView: View {
                     .padding(.horizontal)
                     .padding(.bottom)
                     
-                    
-//                    if comment != nil && !comment!.subtle_list!.isEmpty {
-//                        Divider()
-//                            .opacity(0.4)
-//                        VStack(spacing: 0){
-//                            ForEach(Array(comment!.subtle_list!.enumerated()), id: \.offset) { index, subtle in
-//                                Text("第 \(index + 1) 条附言 · \(subtle.subtle_time)")
-//                                    .font(.subheadline)
-//                                    .fontWeight(.medium)
-//                                    .foregroundColor(Color("333333"))
-//                                    .multilineTextAlignment(.leading)
-//                                    .frame(maxWidth: .infinity, alignment: .topLeading)
-//                                    .padding(.bottom, 10)
-//                                RichText(html: subtle.subtle_content)
-//                                    .lineHeight(170)
-//                                    .colorScheme(.auto)
-//                                    .imageRadius(12)
-//                                    .fontType(.system)
-//                                    .foregroundColor(light: Color.primary, dark: Color.primary)
-//                                    .linkColor(light: Color.blue, dark: Color.blue)
-//                                    .colorPreference(forceColor: .onlyLinks)
-//                                    .linkOpenType(.SFSafariView())
-//                                    .placeholder {
-//                                        Text("")
-//                                            .skeleton(with: true)
-//                                            .shape(type: .rectangle)
-//                                            .multiline(lines: 5, scales: [1: 0.6])
-//                                            .animation(type: .pulse())
-//                                            .frame(height: 100)
-//                                    }
-//                                if (index + 1) < comment!.subtle_list!.count {
-//                                    Divider()
-//                                        .opacity(0.4)
-//                                        .padding(.vertical)
-//                                }
-//                            }
-//                        }
-//                        .padding()
-//                        .background(Color("F6F6F6"))
-//                        .padding(.bottom)
-//                    }
-                    
                     TopicInfoView(topic: topic)
                         .padding(.horizontal)
                         .padding(.bottom)
@@ -111,33 +71,26 @@ struct TopicDetailView: View {
                         .frame(width: UIScreen.main.bounds.width, height: 10)
                     
                     if comment != nil && comment!.reply_list != nil {
-                        LazyVStack(spacing: 0){
+                        VStack(spacing: 0){
                             ForEach(Array(comment!.reply_list!.enumerated()), id: \.offset) { index, reply in
                                 VStack(alignment: .leading){
                                     HStack(alignment: .top) {
                                         TopicUserView(avatar: reply.avatar, author: reply.author, time: reply.reply_time, is_master: reply.is_master, like_num: reply.like_num)
                                         Spacer()
-                                        Text("\(index + 1)楼")
+                                        Text("#\(index + 1)")
                                             .font(.footnote)
                                             .foregroundColor(Color("999999"))
                                     }
-                                    RichText(html: reply.content)
-                                        .lineHeight(170)
-                                        .colorScheme(.auto)
-                                        .imageRadius(12)
-                                        .fontType(.system)
-                                        .foregroundColor(light: Color.primary, dark: Color.primary)
-                                        .linkColor(light: Color.blue, dark: Color.blue)
-                                        .colorPreference(forceColor: .onlyLinks)
-                                        .linkOpenType(.SFSafariView())
-                                        .font(.body)
-                                        .fontWeight(.regular)
-                                        .foregroundColor(Color("333333"))
-                                        .multilineTextAlignment(.leading)
-                                        .frame(maxWidth: .infinity, alignment: .topLeading)
-                                        .padding(.top, 6)
+                                    ReplyWebView(htmlString: reply.content)
                                         .padding(.leading, 40)
-                                        .id(index)
+//                                        .font(.body)
+//                                        .fontWeight(.regular)
+//                                        .foregroundColor(Color("333333"))
+//                                        .multilineTextAlignment(.leading)
+//                                        .frame(maxWidth: .infinity, alignment: .topLeading)
+//                                        .padding(.top, 6)
+//                                        .padding(.leading, 40)
+//                                        .id(index)
                                 }
                                 .padding()
                                 Divider()

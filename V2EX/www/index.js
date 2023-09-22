@@ -2,7 +2,7 @@ $(document).ready(() => {
 	const imgUrl = [];
 
 	// 将图片替换成loading图片
-	function replaceImg(loading) {
+	function replaceImg() {
 		const imgs = $('img');
 		if (imgs.length) {
 			console.log('有图片');
@@ -35,7 +35,12 @@ $(document).ready(() => {
 		const len = imgs.length;
 		let index = 0;
 		for (let i = 0; i < len; i++) {
-			const src = imgUrl[i];
+			let src = imgUrl[i];
+			console.log(src);
+			// 处理站内图片地址 => file://i.v2ex.co/669TEnOY.png
+			if (src.startsWith('file://')) {
+				src = src.replace('file://', 'https://');
+			}
 			const res = await loadImg(src);
 			if (res) {
 				index++;
@@ -59,5 +64,9 @@ $(document).ready(() => {
 	// 发送文档高度给Swiftui
 	function sendHeightToSwiftUI(height) {
 		window.webkit.messageHandlers.getHeight.postMessage(height);
+	}
+
+	function valueGotFromIOS(value) {
+		$(body).html(value)
 	}
 });

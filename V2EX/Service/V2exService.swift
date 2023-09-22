@@ -144,10 +144,9 @@ public struct V2exService {
                 return nil
             }
             
-            var subtle_list = [Subtle]()
+            let subtle_list = [Subtle]()
             
             var reply_list = [Reply]()
-            
             if p == 1 {
                 master = try boxs.get(0).select(".header .gray a").first()!.text()
                 content = try boxs.get(0).select(".cell .topic_content").outerHtml()
@@ -177,7 +176,7 @@ public struct V2exService {
                 let is_master = master == author
                 let reply_time = try reply.select(".ago").text()
                 let like_num = try reply.select(".fade").text()
-                let content = try reply.select(".reply_content").html()
+                let content = try reply.select(".reply_content").outerHtml()
                 
                 if !author.isEmpty {
                     let obj: Reply = Reply(
@@ -189,6 +188,32 @@ public struct V2exService {
                         content: content
                     )
                     reply_list.append(obj)
+                    
+//                    let txt: Element = try reply.select(".reply_content").first()!
+//                    
+//                    for node in txt.getChildNodes() {
+//                        if let textNode = node as? TextNode {
+//                            // 字符串 直接拼接
+////                            text = text + Text(textNode.text().trimmingCharacters(in: .whitespaces))
+//                        } else if let elementNode = node as? Element {
+//                            let tagName = elementNode.tagName()
+//                            // 节点 对应处理
+//                            if tagName == "br" {
+////                                text = text + Text("\n")
+//                            } else if tagName == "a" {
+//                                
+//                                if let txNode = elementNode.childNode(0) as? TextNode {
+//                                    print("文字")
+//                                    print(txNode)
+//                                } else if let elNode = elementNode.childNode(0) as? Element{
+//                                    print("节点")
+//                                    print(elNode)
+//                                }
+//                            } else {
+////                                try! text = text + dispatchInline(elementNode)
+//                            }
+//                        }
+//                    }
                 }
             }
             

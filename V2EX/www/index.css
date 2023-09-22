@@ -3,6 +3,8 @@
   padding: 0;
   font-family: 'Helvetica Neue', 'Luxi Sans', 'Segoe UI', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif, 'Apple Logo';
   word-break: break-all;
+  font-size: 14px;
+  line-height: 1.6;
 }
 img {
   max-width: 100%;
@@ -23,8 +25,6 @@ a {
   padding-bottom: 0;
 }
 .markdown_body {
-  font-size: 14px;
-  line-height: 1.6;
   color: #000;
   word-break: break-word;
 }
@@ -42,8 +42,6 @@ a {
   max-width: 100%;
 }
 .subtle {
-  font-size: 14px;
-  line-height: 1.6;
   border-top: 1px solid #e2e2e2;
   padding: 14px 0;
 }

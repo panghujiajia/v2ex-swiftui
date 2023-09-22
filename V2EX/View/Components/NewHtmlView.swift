@@ -1,14 +1,33 @@
 //
-//  HTMLView.swift
+//  NewHtmlView.swift
 //  V2EX
 //
-//  Created by pumbaa on 2023/9/12.
+//  Created by pumbaa on 2023/9/22.
 //
 
 import SwiftUI
 import WebKit
 
-struct HTMLView: UIViewRepresentable {
+struct ReplyWebView: View {
+    var htmlString: String
+    @State var webViewHeight: CGFloat = 0
+    
+    var body: some View {
+        if !htmlString.isEmpty {
+            WebView(htmlString: htmlString, webViewHeight: $webViewHeight)
+                .frame(height: webViewHeight)
+            if webViewHeight == 0 {
+                Text("")
+                    .skeleton(with: true)
+                    .shape(type: .rectangle)
+                    .multiline(lines: 3, scales: [1: 0.6])
+                    .animation(type: .pulse())
+            }
+        }
+    }
+}
+
+struct WebView: UIViewRepresentable {
     let htmlString: String // 本地HTML文件的文件名
     
     @Binding var webViewHeight: CGFloat // 用于接收WebView高度的绑定变量
@@ -41,9 +60,9 @@ struct HTMLView: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, WKNavigationDelegate {
-        var parent: HTMLView
+        var parent: WebView
         
-        init(_ parent: HTMLView) {
+        init(_ parent: WebView) {
             self.parent = parent
         }
         
@@ -76,7 +95,7 @@ struct HTMLView: UIViewRepresentable {
 
 
 // MARK: - Extensions
-extension HTMLView.Coordinator: WKScriptMessageHandler {
+extension WebView.Coordinator: WKScriptMessageHandler {
     
     // 实现WKScriptMessageHandler协议方法来处理JavaScript消息
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
